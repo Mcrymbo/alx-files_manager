@@ -24,6 +24,13 @@ class UsersController {
         } catch (err) {
             return res.status(500).send({ error: 'Error creating user'});
         }
+
+        const user = {
+            id: result.insertedId,
+            email,
+        };
+
+        return res.status(200).send(user);
     }
 
 }
