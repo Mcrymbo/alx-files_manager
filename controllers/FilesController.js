@@ -1,4 +1,3 @@
-
 import { ObjectID } from 'mongodb';
 import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
@@ -188,8 +187,7 @@ class FilesController {
       return res.end(data);
     }
     return res.status(404).json({ error: 'Not found' });
-  };
-
+  }
 
   static async putUnpublish(req, res) {
     const token = req.headers['x-token'];
@@ -208,7 +206,7 @@ class FilesController {
       console.log(error);
       return res.status(500).json({ error: 'Internal server error' });
     }
-  };
+  }
 
   static async putPublish(req, res) {
     const token = req.headers['x-token'];
@@ -227,8 +225,7 @@ class FilesController {
       console.log(error);
       return res.status(500).json({ error: 'Internal server error' });
     }
-  };
-  
+  }
 }
 
 module.exports = FilesController;

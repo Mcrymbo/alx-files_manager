@@ -35,7 +35,7 @@ class UsersController {
   }
 
   /**
-   * retrieve suer based on token 
+   * retrieve suer based on token
    */
 
   static async getMe(request, response) {
