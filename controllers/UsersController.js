@@ -1,5 +1,6 @@
 import sha1 from 'sha1';
 import dbClient from '../utils/db';
+import { findUserById, findUserIdByToken } from '../utils/helpers';
 
 class UsersController {
   static async postNew(req, res) {
@@ -31,6 +32,29 @@ class UsersController {
     };
 
     return res.status(200).send(user);
+  }
+
+  /**
+   * retrieve suer based on token 
+   */
+
+  static async getMe(request, response) {
+    const token = request.headers['x-token'];
+    if (!token) { return response.status(401).json({ error: 'Unauthorized' }); }
+
+    // Retrieve the user based on the token
+    const userId = await findUserIdByToken(request);
+    if (!userId) return response.status(401).send({ error: 'Unauthorized' });
+
+    const user = await findUserById(userId);
+
+    if (!user) return response.status(401).send({ error: 'Unauthorized' });
+
+    const processedUser = { id: user._id, ...user };
+    delete processedUser._id;
+    delete processedUser.password;
+    // Return the user object (email and id only)
+    return response.status(200).send(processedUser);
   }
 }
 
